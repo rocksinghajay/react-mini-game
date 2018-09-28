@@ -1,24 +1,26 @@
 import React, { Component } from 'react'
 
 import './App.css'
+import { winningLines } from './constants/constants';
 
 class App extends Component {
 
     state = {
 
         board: Array(9).fill(null),
-        player: "X"
+        player: "X",
+        winner: null
 
     }
 
     handleOnClick = index => {
 
-        const { board, player } = this.state
+        const { board, player, winner } = this.state
 
         let newBoard = board
         let newPlayer = player === "X" ? "O" : "X"
 
-        if(newBoard[index] === null) {
+        if(newBoard[index] === null && winner  ) {
 
             newBoard[index] = player
 
@@ -27,6 +29,25 @@ class App extends Component {
                 player:newPlayer
 
             })
+        }
+
+        this.checkWinningPossibilties()
+    }
+
+    checkWinningPossibilties = () => {
+       
+        for (let index = 0; index < winningLines.length; index++) {
+            const [a, b, c] = winningLines[index]
+            const { board,player } = this.state
+
+            if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+                alert("Player win Game Over");
+
+                this.setState({
+                    winner:this.state.player
+                })
+            }
+            
         }
     }
 
