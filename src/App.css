@@ -6,7 +6,7 @@
 .App .board {
     display: inline-flex;
     flex-wrap: wrap;
-    width: 320px;
+    width: 246px;
 }
 
 .App .board .box {
