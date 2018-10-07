@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Status from './components/Status'
+import StatusOfGame from './components/StatusOfGame'
 
 import { winningLines } from './constants/constants'
 
@@ -13,7 +13,8 @@ class App extends Component {
 
         board: Array(9).fill(null),
         player: null,
-        winner: null
+        winner: null,
+        message:''
 
     }
 
@@ -25,99 +26,107 @@ class App extends Component {
         let newPlayer = player === "X" ? "O" : "X"
 
 
-        if(newBoard[index] === null && !winner && player) {
+        if (newBoard[index] === null && !winner && player) {
 
             newBoard[index] = player
 
             this.setState({
-                board:newBoard,
-                player:newPlayer
+                board: newBoard,
+                player: newPlayer
             })
 
             this.checkWinningPossibilties()
 
         }
 
+        else {
+
+            this.setState({
+                message:'Please select a player'
+            })
+            
+        }
+
     }
 
     checkWinningPossibilties = () => {
-       
-        for (let index = 0; index < winningLines.length; index++) {
-            const [a, b, c] = winningLines[index]
-            const { board,player } = this.state
 
-            if(board[a] && board[a] === board[b] && board[a] === board[c]) {
-                alert("Player win Game Over");
+        for (let index = 0; index < winningLines.length; index++) {
+
+            const [a, b, c] = winningLines[index]
+            const { board, player} = this.state
+
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+
 
                 this.setState({
-                    winner:player
+                    winner: player
                 })
+
+                alert(`Player ${player} win Game Over`);
+
             }
-            
+
         }
     }
 
     setPlayer = (player) => {
-
-        console.log("setPlayer")
 
         this.setState({
             player
         })
     }
 
-    renderBoxes = () =>  {
+    renderBoxes = () => {
 
-      const { board } = this.state
-
+        const { board } = this.state
 
         return (
 
-            board.map((box,index) => {
+            board.map((box, index) => {
                 return (
-                    <div key={index} className="box" onClick={ () => this.handleOnClick(index) }>{ box }</div>
-                  )})
-                  
+                    <div key={index} className="box" onClick={() => this.handleOnClick(index)}>{box}</div>
+                )
+            })
+
         )
     }
 
     resetGame = () => {
 
         this.setState({
-            player:null,
-            winner:null,
-            board: Array(9).fill(null)
+            player: null,
+            winner: null,
+            board: Array(9).fill(null),
+            message:''
         })
     }
 
-  render() {
+    render() {
 
-      const { player, winner } = this.state
+        const { player, winner, message } = this.state
 
-    return (
-      <div className="App">
+        return (
+            <div className="App">
+                <h1>TicTacToe Game</h1>
 
-        <h1>TicTacToe Game</h1>
+                {
+                    !player && !winner ? <p style={{color:'red'}}>{message}</p> : ''
+                }
+                
+                <div className="board">
+                    {this.renderBoxes()}
+                </div>
 
-        
-           
-        <div className="board">
-          { this.renderBoxes() }
-        </div>
+                <StatusOfGame player={player} winner={winner} setPlayer={(e) => { this.setPlayer(e) }} />
 
-        <Status  player={player} winner={winner} setPlayer={ (e) => {this.setPlayer(e)} }/>
+                {
+                    player ? <button onClick={this.resetGame}>Rest Game</button> : ''
 
-        {
-          player ? <button onClick={this.resetGame}>Rest Game</button> : ''
-         
-        }
-
-        
-        
-
-      </div>
-    )
-  }
+                } 
+            </div>
+        )
+    }
 }
 
 export default App;
