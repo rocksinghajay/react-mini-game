@@ -1,7 +1,6 @@
 .App {
     text-align: center;
     align-content: center;
-    background-color: aquamarine;
 }
 
 .App .board {
@@ -13,7 +12,30 @@
 .App .board .box {
     width: 80px;
     height: 80px;
-    border: 1px solid #000;
+    border: 1px solid #9E9E9E;
     display: inline-block;
     line-height: 80px;
+    font-size: 35px;
+    color: red;
+}
+
+.App > h1 {
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+}
+
+.ChoosePlayer label {
+    padding-right: 10px;
+}
+
+.ChoosePlayer input {
+    margin-left: 10px;
+}
+
+.ChoosePlayer button {
+    padding: 3px 15px;
+    font-weight: bold;
+    border: 1px solid #9E9E9E;
+    border-radius: 3px;
+    background: transparent;
 }
