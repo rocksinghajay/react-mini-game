@@ -15,8 +15,13 @@ class StatusOfGame extends Component {
                message: 'Please select a player'
            })
         }
+        else {
+            this.setState({
+                message: ''
+            })
+            this.props.setPlayer(e)
+        }
 
-        this.props.setPlayer(e)
     }
 
     render() {
